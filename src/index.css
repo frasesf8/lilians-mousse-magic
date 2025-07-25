@@ -8,35 +8,62 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Paleta inspirada em mousses e sobremesas */
+    --background: 35 100% 97%;
+    --foreground: 25 20% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 25 20% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 25 20% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Chocolate escuro para primary */
+    --primary: 25 35% 25%;
+    --primary-foreground: 35 100% 97%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Tom de morango suave */
+    --secondary: 350 45% 85%;
+    --secondary-foreground: 25 35% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Tom de baunilha */
+    --muted: 45 50% 92%;
+    --muted-foreground: 25 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Laranja suave como accent */
+    --accent: 30 80% 75%;
+    --accent-foreground: 25 35% 25%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 30 30% 88%;
+    --input: 30 30% 88%;
+    --ring: 25 35% 25%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Cores customizadas para mousses */
+    --chocolate: 25 35% 25%;
+    --strawberry: 350 65% 70%;
+    --vanilla: 45 70% 88%;
+    --orange: 30 85% 65%;
+    --cream: 35 60% 95%;
+    
+    /* Gradientes */
+    --gradient-mousse: linear-gradient(135deg, hsl(var(--strawberry)), hsl(var(--orange)));
+    --gradient-sweet: linear-gradient(180deg, hsl(var(--cream)), hsl(var(--vanilla)));
+    --gradient-chocolate: linear-gradient(135deg, hsl(var(--chocolate)), hsl(25 45% 35%));
+
+    /* Sombras */
+    --shadow-sweet: 0 8px 32px hsl(var(--strawberry) / 0.15);
+    --shadow-warm: 0 4px 20px hsl(var(--orange) / 0.2);
+    --shadow-elegant: 0 12px 40px hsl(var(--chocolate) / 0.1);
+
+    /* Transições */
+    --transition-sweet: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
