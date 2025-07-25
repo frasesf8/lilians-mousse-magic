@@ -28,13 +28,6 @@ const Header = () => {
               <BookOpen className="h-4 w-4" />
               Receitas
             </a>
-            <a 
-              href="#sobre" 
-              className="text-foreground hover:text-strawberry transition-sweet flex items-center gap-2"
-            >
-              <Heart className="h-4 w-4" />
-              Sobre a Lilian
-            </a>
           </nav>
 
           {/* CTA Button */}
