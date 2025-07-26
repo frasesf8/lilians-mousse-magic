@@ -1,24 +1,1405 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="pt-BR">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lilian Inventando Arte - Mousses Deliciosos</title>
     <meta name="description" content="Descubra receitas incríveis de mousses com a Lilian. Cada criação é uma obra de arte que desperta seus sentidos." />
     <meta name="author" content="Lilian Inventando Arte" />
+    
+    <style>
+        /* Reset e Design System */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <meta property="og:title" content="Lilian Inventando Arte - Mousses Deliciosos" />
-    <meta property="og:description" content="Receitas especiais de mousses criadas com amor e técnicas únicas." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+        :root {
+            /* Cores em HSL */
+            --background: 35 100% 97%;
+            --foreground: 25 20% 15%;
+            --card: 0 0% 100%;
+            --card-foreground: 25 20% 15%;
+            --primary: 25 35% 25%;
+            --primary-foreground: 35 100% 97%;
+            --secondary: 350 45% 85%;
+            --secondary-foreground: 25 35% 25%;
+            --muted: 45 50% 92%;
+            --muted-foreground: 25 15% 45%;
+            --accent: 30 80% 75%;
+            --accent-foreground: 25 35% 25%;
+            --border: 30 30% 88%;
+            --ring: 25 35% 25%;
+            
+            /* Cores customizadas para mousses */
+            --chocolate: 25 35% 25%;
+            --strawberry: 350 65% 70%;
+            --vanilla: 45 70% 88%;
+            --orange: 30 85% 65%;
+            --cream: 35 60% 95%;
+            
+            --transition-sweet: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+        }
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: hsla(var(--background), 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid hsl(var(--border));
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, hsl(var(--strawberry)), hsl(var(--orange)));
+            padding: 0.5rem;
+            border-radius: 50%;
+            animation: bounce-gentle 2s infinite;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, hsl(var(--strawberry)), hsl(var(--orange)));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 0.875rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition-sweet);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-mousse {
+            background: linear-gradient(135deg, hsl(var(--strawberry)), hsl(var(--orange)));
+            color: hsl(var(--primary-foreground));
+        }
+
+        .btn-mousse:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px hsla(var(--strawberry), 0.15);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, hsl(var(--cream)), hsl(var(--vanilla)));
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero-content {
+            max-width: 48rem;
+        }
+
+        .hero-subtitle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: hsl(var(--strawberry));
+            font-weight: 500;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, hsl(var(--strawberry)), hsl(var(--orange)));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 2rem;
+        }
+
+        /* Seção de Receitas */
+        .recipes-section {
+            padding: 5rem 0;
+            background: linear-gradient(180deg, hsl(var(--cream)), hsl(var(--vanilla)));
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, hsl(var(--strawberry)), hsl(var(--orange)));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: hsl(var(--muted-foreground));
+            max-width: 32rem;
+            margin: 0 auto;
+        }
+
+        /* Tabs */
+        .tabs {
+            margin-bottom: 3rem;
+        }
+
+        .tabs-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 24rem;
+            margin: 0 auto;
+            background: hsl(var(--card));
+            border-radius: 0.5rem;
+            padding: 0.25rem;
+            border: 1px solid hsl(var(--border));
+        }
+
+        .tab-trigger {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            transition: var(--transition-sweet);
+            font-size: 0.875rem;
+        }
+
+        .tab-trigger.active {
+            background: hsl(var(--strawberry));
+            color: hsl(var(--primary-foreground));
+        }
+
+        .tab-trigger:hover:not(.active) {
+            background: hsl(var(--muted));
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Grid de Receitas */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Card de Receita */
+        .recipe-card {
+            background: hsl(var(--card));
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid hsl(var(--border));
+            transition: var(--transition-sweet);
+            cursor: pointer;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 32px hsla(var(--strawberry), 0.15);
+        }
+
+        .card-image-container {
+            position: relative;
+            height: 12rem;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-sweet);
+        }
+
+        .recipe-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .flavor-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .flavor-pineapple, .flavor-passionfruit {
+            background: hsl(var(--orange));
+            color: hsl(var(--primary-foreground));
+        }
+
+        .flavor-strawberry {
+            background: hsl(var(--strawberry));
+            color: hsl(var(--primary-foreground));
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            border: none;
+            background: hsla(var(--background), 0.8);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-sweet);
+        }
+
+        .favorite-btn:hover {
+            background: hsl(var(--background));
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            transition: var(--transition-sweet);
+        }
+
+        .recipe-card:hover .card-title {
+            color: hsl(var(--strawberry));
+        }
+
+        .card-description {
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .difficulty-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            border: 1px solid hsl(var(--border));
+            font-size: 0.75rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: hsl(var(--card));
+            border-radius: 1rem;
+            max-width: 60rem;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, hsl(var(--strawberry)), hsl(var(--orange)));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-description {
+            color: hsl(var(--muted-foreground));
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 2rem;
+            height: 2rem;
+            border: none;
+            background: hsl(var(--muted));
+            border-radius: 0.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 16rem;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ingredients-section,
+        .instructions-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: hsl(var(--strawberry));
+            margin-bottom: 1rem;
+        }
+
+        .ingredient-category {
+            margin-bottom: 1rem;
+        }
+
+        .category-title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .ingredient-list {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .ingredient-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+        }
+
+        .bullet {
+            color: hsl(var(--strawberry));
+            font-weight: bold;
+        }
+
+        .instruction-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .instruction-title {
+            font-weight: 500;
+            color: hsl(var(--chocolate));
+            margin-bottom: 0.5rem;
+        }
+
+        .instruction-list {
+            list-style: none;
+        }
+
+        .instruction-item {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .step-number {
+            background: hsl(var(--strawberry));
+            color: hsl(var(--primary-foreground));
+            border-radius: 50%;
+            width: 1.25rem;
+            height: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .notes-section {
+            background: hsl(var(--cream));
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid hsla(var(--orange), 0.2);
+        }
+
+        .notes-title {
+            font-weight: 500;
+            color: hsl(var(--chocolate));
+            margin-bottom: 0.5rem;
+        }
+
+        .separator {
+            height: 1px;
+            background: hsl(var(--border));
+            margin: 1.5rem 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo-icon {
+            background: linear-gradient(135deg, hsl(var(--strawberry)), hsl(var(--orange)));
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .footer-brand-text h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .footer-brand-text p {
+            opacity: 0.8;
+            font-size: 0.875rem;
+        }
+
+        .footer-description {
+            opacity: 0.8;
+            max-width: 24rem;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid hsla(var(--primary-foreground), 0.2);
+            padding-top: 2rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Animações */
+        @keyframes bounce-gentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Ícones SVG */
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            fill: currentColor;
+        }
+
+        .icon-lg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .tabs-list {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 20rem;
+            }
+            
+            .modal-content {
+                margin: 1rem;
+                max-width: calc(100vw - 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                font-size: 0.75rem;
+                padding: 0.375rem 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+                            <line x1="10" y1="9" x2="10" y2="9"/>
+                            <line x1="14" y1="9" x2="14" y2="9"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Lilian Inventando Arte</h1>
+                        <p>Mousses Deliciosos</p>
+                    </div>
+                </div>
+                <a href="#receitas" class="btn btn-mousse">Ver Receitas</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-subtitle">
+                    <svg class="icon animate-float" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+                    </svg>
+                    <span>Bem-vindos à Arte Doce</span>
+                </div>
+                <h1 class="hero-title">Lilian Inventando Arte</h1>
+                <p class="hero-description">Receitas especiais de mousses deliciosos</p>
+                <a href="#receitas" class="btn btn-mousse">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+                        <line x1="10" y1="9" x2="10" y2="9"/>
+                        <line x1="14" y1="9" x2="14" y2="9"/>
+                    </svg>
+                    Ver Receitas
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Receitas -->
+    <section id="receitas" class="recipes-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Receitas Especiais</h2>
+                <p class="section-description">
+                    Cada receita é cuidadosamente criada pela Lilian, com ingredientes selecionados 
+                    e técnicas especiais para garantir o sabor perfeito.
+                </p>
+            </div>
+
+            <div class="tabs">
+                <div class="tabs-list">
+                    <button class="tab-trigger active" onclick="showTab('todos')">Todos</button>
+                    <button class="tab-trigger" onclick="showTab('chocolate')">Chocolate</button>
+                    <button class="tab-trigger" onclick="showTab('frutas')">Frutas</button>
+                    <button class="tab-trigger" onclick="showTab('especiais')">Especiais</button>
+                </div>
+            </div>
+
+            <div id="tab-todos" class="tab-content active">
+                <div class="recipes-grid">
+                    <!-- Mousse de Abacaxi -->
+                    <div class="recipe-card" onclick="openModal('abacaxi')">
+                        <div class="card-image-container">
+                            <img src="src/assets/mousse-abacaxi.jpg" alt="Mousse de Abacaxi" class="card-image">
+                            <div class="flavor-badge flavor-pineapple">Abacaxi</div>
+                            <button class="favorite-btn" onclick="event.stopPropagation();">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mousse de Abacaxi</h3>
+                            <p class="card-description">
+                                Mousse tropical cremoso com polpa de abacaxi, finalizado com ganache de chocolate e coco ralado. Uma explosão de sabores refrescantes.
+                            </p>
+                            <div class="card-meta">
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12,6 12,12 16,14"/>
+                                    </svg>
+                                    45 min
+                                </div>
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    8 porções
+                                </div>
+                                <div class="difficulty-badge">Fácil</div>
+                            </div>
+                            <button class="btn btn-mousse" style="width: 100%;">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+                                    <line x1="10" y1="9" x2="10" y2="9"/>
+                                    <line x1="14" y1="9" x2="14" y2="9"/>
+                                </svg>
+                                Ver Receita Completa
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mousse de Maracujá -->
+                    <div class="recipe-card" onclick="openModal('maracuja')">
+                        <div class="card-image-container">
+                            <img src="src/assets/mousse-maracuja.jpg" alt="Mousse de Maracujá" class="card-image">
+                            <div class="flavor-badge flavor-passionfruit">Maracujá</div>
+                            <button class="favorite-btn" onclick="event.stopPropagation();">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mousse de Maracujá com Casquinha</h3>
+                            <p class="card-description">
+                                Mousse cremoso de maracujá com casquinha crocante de chocolate e geleia de maracujá. Uma combinação perfeita de texturas e sabores.
+                            </p>
+                            <div class="card-meta">
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12,6 12,12 16,14"/>
+                                    </svg>
+                                    50 min
+                                </div>
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    6 porções
+                                </div>
+                                <div class="difficulty-badge">Médio</div>
+                            </div>
+                            <button class="btn btn-mousse" style="width: 100%;">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+                                    <line x1="10" y1="9" x2="10" y2="9"/>
+                                    <line x1="14" y1="9" x2="14" y2="9"/>
+                                </svg>
+                                Ver Receita Completa
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mousse de Morango -->
+                    <div class="recipe-card" onclick="openModal('morango')">
+                        <div class="card-image-container">
+                            <img src="src/assets/mousse-morango.jpg" alt="Mousse de Morango" class="card-image">
+                            <div class="flavor-badge flavor-strawberry">Morango</div>
+                            <button class="favorite-btn" onclick="event.stopPropagation();">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mousse de Morango com Geleia</h3>
+                            <p class="card-description">
+                                Mousse de morango com casquinha de chocolate e geleia caseira de morango. O clássico que nunca sai de moda, feito com muito carinho.
+                            </p>
+                            <div class="card-meta">
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12,6 12,12 16,14"/>
+                                    </svg>
+                                    60 min
+                                </div>
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    8 porções
+                                </div>
+                                <div class="difficulty-badge">Médio</div>
+                            </div>
+                            <button class="btn btn-mousse" style="width: 100%;">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+                                    <line x1="10" y1="9" x2="10" y2="9"/>
+                                    <line x1="14" y1="9" x2="14" y2="9"/>
+                                </svg>
+                                Ver Receita Completa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-chocolate" class="tab-content">
+                <div class="recipes-grid">
+                    <div style="text-align: center; padding: 5rem 0; grid-column: 1 / -1;">
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 1.125rem;">
+                            Receitas com chocolate em breve! 🍫
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-frutas" class="tab-content">
+                <div class="recipes-grid">
+                    <!-- Mesmos cards de frutas -->
+                    <div class="recipe-card" onclick="openModal('abacaxi')">
+                        <div class="card-image-container">
+                            <img src="src/assets/mousse-abacaxi.jpg" alt="Mousse de Abacaxi" class="card-image">
+                            <div class="flavor-badge flavor-pineapple">Abacaxi</div>
+                            <button class="favorite-btn" onclick="event.stopPropagation();">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mousse de Abacaxi</h3>
+                            <p class="card-description">
+                                Mousse tropical cremoso com polpa de abacaxi, finalizado com ganache de chocolate e coco ralado.
+                            </p>
+                            <div class="card-meta">
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12,6 12,12 16,14"/>
+                                    </svg>
+                                    45 min
+                                </div>
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    8 porções
+                                </div>
+                                <div class="difficulty-badge">Fácil</div>
+                            </div>
+                            <button class="btn btn-mousse" style="width: 100%;">Ver Receita Completa</button>
+                        </div>
+                    </div>
+
+                    <div class="recipe-card" onclick="openModal('maracuja')">
+                        <div class="card-image-container">
+                            <img src="src/assets/mousse-maracuja.jpg" alt="Mousse de Maracujá" class="card-image">
+                            <div class="flavor-badge flavor-passionfruit">Maracujá</div>
+                            <button class="favorite-btn" onclick="event.stopPropagation();">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mousse de Maracujá com Casquinha</h3>
+                            <p class="card-description">
+                                Mousse cremoso de maracujá com casquinha crocante de chocolate e geleia de maracujá.
+                            </p>
+                            <div class="card-meta">
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12,6 12,12 16,14"/>
+                                    </svg>
+                                    50 min
+                                </div>
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    6 porções
+                                </div>
+                                <div class="difficulty-badge">Médio</div>
+                            </div>
+                            <button class="btn btn-mousse" style="width: 100%;">Ver Receita Completa</button>
+                        </div>
+                    </div>
+
+                    <div class="recipe-card" onclick="openModal('morango')">
+                        <div class="card-image-container">
+                            <img src="src/assets/mousse-morango.jpg" alt="Mousse de Morango" class="card-image">
+                            <div class="flavor-badge flavor-strawberry">Morango</div>
+                            <button class="favorite-btn" onclick="event.stopPropagation();">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mousse de Morango com Geleia</h3>
+                            <p class="card-description">
+                                Mousse de morango com casquinha de chocolate e geleia caseira de morango.
+                            </p>
+                            <div class="card-meta">
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12,6 12,12 16,14"/>
+                                    </svg>
+                                    60 min
+                                </div>
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    8 porções
+                                </div>
+                                <div class="difficulty-badge">Médio</div>
+                            </div>
+                            <button class="btn btn-mousse" style="width: 100%;">Ver Receita Completa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-especiais" class="tab-content">
+                <div style="text-align: center; padding: 5rem 0;">
+                    <p style="color: hsl(var(--muted-foreground)); font-size: 1.125rem;">
+                        Receitas especiais em breve! 🎂
+                    </p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn btn-mousse" style="padding: 0.75rem 2rem; font-size: 1rem;">
+                    Ver Todas as Receitas
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-brand">
+                <div class="footer-logo-icon">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+                        <line x1="10" y1="9" x2="10" y2="9"/>
+                        <line x1="14" y1="9" x2="14" y2="9"/>
+                    </svg>
+                </div>
+                <div class="footer-brand-text">
+                    <h3>Lilian Inventando Arte</h3>
+                    <p>Mousses Deliciosos</p>
+                </div>
+            </div>
+            
+            <p class="footer-description">
+                Receitas especiais de mousses feitas com amor e dedicação.
+            </p>
+
+            <div class="footer-bottom">
+                <p>
+                    Feito com 
+                    <svg class="icon animate-float" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: hsl(var(--strawberry));">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg> 
+                    pela Lilian Inventando Arte © 2024
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modais -->
+    <!-- Modal Abacaxi -->
+    <div id="modal-abacaxi" class="modal-overlay" onclick="closeModal('abacaxi')">
+        <div class="modal-content" onclick="event.stopPropagation();">
+            <button class="close-btn" onclick="closeModal('abacaxi')">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title">🍍 Mousse de Abacaxi</h2>
+                <p class="modal-description">Mousse tropical cremoso com polpa de abacaxi, finalizado com ganache de chocolate e coco ralado. Uma explosão de sabores refrescantes.</p>
+            </div>
+            <div class="modal-body">
+                <img src="src/assets/mousse-abacaxi.jpg" alt="Mousse de Abacaxi" class="recipe-image">
+                
+                <div class="ingredients-section">
+                    <h3 class="section-subtitle">📝 Ingredientes</h3>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Para a mousse:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 polpa de abacaxi (congelada ou natural)</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 2 caixinhas de creme de leite</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 xícara de leite em pó (a gosto)</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 caixa de leite condensado</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 sachê de suco em pó sabor abacaxi (Tang)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Para a ganache de chocolate:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 barra de chocolate branco ou meio amargo (Lacta 90g)</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1/2 caixinha de creme de leite</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Coberturas (opcional):</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> Abacaxi picado (a gosto)</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 sachê de coco ralado sem açúcar (use a gosto)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="instructions-section">
+                    <h3 class="section-subtitle">🍮 Modo de Preparo</h3>
+                    
+                    <div class="instruction-category">
+                        <h4 class="instruction-title">1. Mousse:</h4>
+                        <ol class="instruction-list">
+                            <li class="instruction-item">
+                                <span class="step-number">1</span>
+                                <span>Bata no liquidificador: as 2 caixinhas de creme de leite + a polpa de abacaxi + o leite em pó.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">2</span>
+                                <span>Adicione o leite condensado e o suco em pó. Bata até a mistura ficar bem cremosa.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">3</span>
+                                <span>Reserve na geladeira ou leve ao congelador por 30 minutos para firmar.</span>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="instruction-category">
+                        <h4 class="instruction-title">2. Ganache de chocolate (casquinha):</h4>
+                        <ol class="instruction-list">
+                            <li class="instruction-item">
+                                <span class="step-number">1</span>
+                                <span>Derreta o chocolate ainda na embalagem com um pequeno furo, em água fervente (sem ligar o fogo).</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">2</span>
+                                <span>Misture com 1/2 caixinha de creme de leite até virar uma ganache lisa.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">3</span>
+                                <span>Despeje no fundo do recipiente antes de adicionar o mousse.</span>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <h4 class="notes-title">💡 Dicas da Lilian:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet" style="color: hsl(var(--orange));">•</span> Cubra com o mousse já pronto e finalize com abacaxi picado e coco ralado por cima (opcional).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Maracujá -->
+    <div id="modal-maracuja" class="modal-overlay" onclick="closeModal('maracuja')">
+        <div class="modal-content" onclick="event.stopPropagation();">
+            <button class="close-btn" onclick="closeModal('maracuja')">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title">🍊 Mousse de Maracujá com Casquinha de Chocolate e Geleia</h2>
+                <p class="modal-description">Mousse cremoso de maracujá com casquinha crocante de chocolate e geleia de maracujá. Uma combinação perfeita de texturas e sabores.</p>
+            </div>
+            <div class="modal-body">
+                <img src="src/assets/mousse-maracuja.jpg" alt="Mousse de Maracujá" class="recipe-image">
+                
+                <div class="ingredients-section">
+                    <h3 class="section-subtitle">📝 Ingredientes</h3>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Para a mousse:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 polpa de maracujá (natural ou congelada)</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 2 caixinhas de creme de leite</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 xícara de leite em pó (a gosto)</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 cx de leite condensado</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 sachê de suco em pó sabor maracujá (Tang)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Para a casquinha de chocolate:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 barra de chocolate meio amargo (Lacta 90g)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Coberturas (opcional):</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> Doce de leite (a gosto)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Para a geleia:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> 2 polpas de maracujá ou fruta (para a geleia)</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 colher de sopa de açúcar</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="instructions-section">
+                    <h3 class="section-subtitle">🍮 Modo de Preparo</h3>
+                    
+                    <div class="instruction-category">
+                        <h4 class="instruction-title">1. Mousse:</h4>
+                        <ol class="instruction-list">
+                            <li class="instruction-item">
+                                <span class="step-number">1</span>
+                                <span>Bata no liquidificador: 2 cremes de leite + 1 polpa de maracujá + leite em pó.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">2</span>
+                                <span>Adicione o leite condensado e o suco Tang, bata mais.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">3</span>
+                                <span>Despeje num recipiente e leve ao congelador por 30 minutos.</span>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="instruction-category">
+                        <h4 class="instruction-title">2. Casquinha de chocolate:</h4>
+                        <ol class="instruction-list">
+                            <li class="instruction-item">
+                                <span class="step-number">1</span>
+                                <span>Derreta a barra de chocolate (ainda na embalagem, com furo pequeno) em água fervente.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">2</span>
+                                <span>Espalhe sobre a mousse para formar uma casquinha.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">3</span>
+                                <span>Aqueça o doce de leite e despeje sobre a casquinha de chocolate endurecida (opcional).</span>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="instruction-category">
+                        <h4 class="instruction-title">3. Geleia:</h4>
+                        <ol class="instruction-list">
+                            <li class="instruction-item">
+                                <span class="step-number">1</span>
+                                <span>Cozinhe 2 polpas com 1 colher de açúcar até engrossar.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">2</span>
+                                <span>Opcional: Bata com creme de leite para uma cobertura mais cremosa.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">3</span>
+                                <span>Finalize cobrindo a sobremesa.</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Morango -->
+    <div id="modal-morango" class="modal-overlay" onclick="closeModal('morango')">
+        <div class="modal-content" onclick="event.stopPropagation();">
+            <button class="close-btn" onclick="closeModal('morango')">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title">🍓 Mousse de Morango com Casquinha de Chocolate e Geleia</h2>
+                <p class="modal-description">Mousse de morango com casquinha de chocolate e geleia caseira de morango. O clássico que nunca sai de moda, feito com muito carinho.</p>
+            </div>
+            <div class="modal-body">
+                <img src="src/assets/mousse-morango.jpg" alt="Mousse de Morango" class="recipe-image">
+                
+                <div class="ingredients-section">
+                    <h3 class="section-subtitle">📝 Ingredientes</h3>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Para a mousse:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 polpa grande de morango</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 3 caixinhas de creme de leite</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 xícara de leite em pó (a gosto)</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 caixa de leite condensado</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 sachê de suco em pó sabor morango (Tang ou Trink), Trink é muito ruim.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Para a casquinha de chocolate:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> 1 barra de chocolate (Lacta 90g), o Hershey's é bem ruim de derreter.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="ingredient-category">
+                        <h4 class="category-title">Para a geleia de morango:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet">•</span> Meio pacote de morango congelado ou fresco (a gosto)</li>
+                            <li class="ingredient-item"><span class="bullet">•</span> Metade de um limão para conservar (a gosto)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="instructions-section">
+                    <h3 class="section-subtitle">🍮 Modo de Preparo</h3>
+                    
+                    <div class="instruction-category">
+                        <h4 class="instruction-title">1. Casquinha de chocolate (fundo):</h4>
+                        <ol class="instruction-list">
+                            <li class="instruction-item">
+                                <span class="step-number">1</span>
+                                <span>Derreta a barra de chocolate ainda na embalagem com um furo pequeno, em água fervente (sem ligar o fogo).</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">2</span>
+                                <span>Corte a embalagem e despeje no fundo do recipiente onde montará a sobremesa.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">3</span>
+                                <span>Leve à geladeira ou congelador por alguns minutos até endurecer.</span>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="instruction-category">
+                        <h4 class="instruction-title">2. Mousse:</h4>
+                        <ol class="instruction-list">
+                            <li class="instruction-item">
+                                <span class="step-number">1</span>
+                                <span>Bata no liquidificador: Polpa do morango + 3 caixinhas de creme de leite + leite em pó.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">2</span>
+                                <span>Adicione o leite condensado e o suco em pó de morango. Bata até obter um creme.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">3</span>
+                                <span>Despeje sobre a casquinha já firme e leve ao congelador por 30 minutos.</span>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="instruction-category">
+                        <h4 class="instruction-title">3. Geleia de morango (cobertura):</h4>
+                        <ol class="instruction-list">
+                            <li class="instruction-item">
+                                <span class="step-number">1</span>
+                                <span>Em uma panela antiaderente, cozinhe os morangos inteiros + suco do limão.</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">2</span>
+                                <span>Mexa em fogo baixo até engrossar e formar uma geleia (5–10 minutos).</span>
+                            </li>
+                            <li class="instruction-item">
+                                <span class="step-number">3</span>
+                                <span>Deixe esfriar antes de despejar sobre o mousse.</span>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <h4 class="notes-title">💡 Dicas da Lilian:</h4>
+                        <ul class="ingredient-list">
+                            <li class="ingredient-item"><span class="bullet" style="color: hsl(var(--orange));">•</span> Use leite condensado Italac para garantir consistência e evitar que fique aguado.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar entre tabs
+        function showTab(tabName) {
+            // Remove classe active de todos os triggers e conteúdos
+            document.querySelectorAll('.tab-trigger').forEach(trigger => {
+                trigger.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Adiciona classe active ao trigger clicado
+            event.target.classList.add('active');
+            
+            // Mostra o conteúdo correspondente
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+
+        // Função para abrir modal
+        function openModal(recipeType) {
+            document.getElementById(`modal-${recipeType}`).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Função para fechar modal
+        function closeModal(recipeType) {
+            document.getElementById(`modal-${recipeType}`).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fechar modal com ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Scroll suave para links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
 </html>
